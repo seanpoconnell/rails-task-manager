@@ -17,10 +17,12 @@ class TasksController < ApplicationController
   # POST /tasks
   def create
     @task = Task.new(task_params)
-    raise
-    @task.save
-
-    redirect_to tasks_path(@task)
+    # raise
+    if @task.save
+      redirect_to task_path(@task)
+    else
+      render :new
+    end
   end
 
   def edit
@@ -35,7 +37,7 @@ class TasksController < ApplicationController
   private
 
   def task_params
-    params.require(:task).permit(:title, :description)
+    params.require(:task).permit(:title, :details, :completed)
   end
 
 end
